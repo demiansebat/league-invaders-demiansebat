@@ -1,4 +1,5 @@
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class LeagueInvaders {
 	JFrame frame;
@@ -14,6 +15,7 @@ public class LeagueInvaders {
 	LeagueInvaders() {
 		frame = new JFrame();
 		gamething= new GamePanel();
+		frame.addKeyListener(gamething);
 	}
 
 	void setup() {
