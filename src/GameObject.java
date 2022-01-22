@@ -14,7 +14,7 @@ public class GameObject {
 			int speed=0;
 			boolean isActive=true;
 	 }
-	void update(){
+	 void update() {
 		 
 	 }
 }
