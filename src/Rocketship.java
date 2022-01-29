@@ -9,19 +9,19 @@ public class Rocketship extends GameObject{
 	}
 	
 	public void down() {
-		x+=speed;
+		y+=speed;
 	}
 
 	public void up() {
-		y+=speed;
+		y-=speed;
 	}
 	
 	public void left() {
-		
+		x-=speed;
 	}
 
 	public void right() {
-		
+		x+=speed;
 	}
 	void draw(Graphics g) {
 		g.setColor(Color.BLUE);

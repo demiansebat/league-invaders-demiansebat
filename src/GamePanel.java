@@ -1,6 +1,3 @@
-//JUST STARTED WORKING ON "ROCKET (DRAW)" SECTION
-//IMPORTANT!!!
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,7 +18,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int END = 2;
 	int currentState = MENU;
 	Timer frameDraw;
-	Rocketship rocketship=new Rocketship(LeagueInvaders.WIDTH/2, LeagueInvaders.HEIGHT-100,50,50);
+	Rocketship rocketship = new Rocketship(LeagueInvaders.WIDTH / 2, LeagueInvaders.HEIGHT - 100, 50, 50);
 
 	GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -116,15 +113,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			System.out.println("UP");
+			if (rocketship.y > rocketship.speed) {
+				rocketship.up();
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			System.out.println("DOWN");
+			if (rocketship.y < LeagueInvaders.HEIGHT - rocketship.height-rocketship.speed) {
+				rocketship.down();
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			System.out.println("LEFT");
+			if (rocketship.x > rocketship.speed) {
+				rocketship.left();
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			System.out.println("RIGHT");
+			if (rocketship.x < LeagueInvaders.WIDTH - rocketship.width-rocketship.speed) {
+				rocketship.right();
+			}
 		}
 	}
 
