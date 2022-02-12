@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -18,6 +20,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int END = 2;
 	int currentState = MENU;
 	Timer frameDraw;
+	Timer alienSpawn;
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;	
 	Rocketship rocketship = new Rocketship(LeagueInvaders.WIDTH / 2, LeagueInvaders.HEIGHT - 100, 50, 50);
 	ObjectManager manager= new ObjectManager(rocketship);
 	GamePanel() {
@@ -25,8 +31,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		headingfont = new Font("Arial", Font.PLAIN, 20);
 		frameDraw = new Timer(1000 / 60, this);
 		frameDraw.start();
+		if (needImage) {
+		    loadImage ("space.png");
+		}
 	}
-
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            
+	        }
+	        needImage = false;
+	    }
+	}
 	@Override
 	public void paintComponent(Graphics g) {
 		if (currentState == MENU) {
@@ -65,8 +84,13 @@ manager.update();
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		  if (gotImage) {
+	        	g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+	        } else {
+	        	g.setColor(Color.BLACK);
+	        	g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+	        }
+
 	manager.draw(g);
 	}
 
@@ -109,6 +133,12 @@ manager.update();
 				currentState = MENU;
 			} else {
 				currentState++;
+				if(currentState==GAME) {
+					startGame();
+				}
+				else if(currentState==END) {
+					alienSpawn.stop();
+				}
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -135,12 +165,18 @@ manager.update();
 				rocketship.right();
 			}
 		}
+		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+			manager.addProjectile(rocketship.getProjectile());
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+	
 
 	}
-
+void startGame(){
+	alienSpawn = new Timer(1000,manager);
+    alienSpawn.start();
+}
 }

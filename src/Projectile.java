@@ -12,7 +12,7 @@ public class Projectile extends GameObject{
 		super(x, y, width, height);
 		speed=10;
 		if (needImage) {
-		    loadImage ("rocket.png");
+		    loadImage ("bullet.png");
 		}
 	}
 	void loadImage(String imageFile) {
@@ -30,8 +30,6 @@ void update() {
 	y-=speed;
 }
 void draw(Graphics g) {
-	  g.setColor(Color.RED);
-      g.fillRect(x, y, width, height);
       if (gotImage) {
     		g.drawImage(image, x, y, width, height, null);
     	} else {
