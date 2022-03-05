@@ -15,10 +15,10 @@ import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titleFont;
 	Font headingfont;
-	final int MENU = 0;
-	final int GAME = 1;
-	final int END = 2;
-	int currentState = MENU;
+	public static final int MENU = 0;
+	public static final int GAME = 1;
+	public static final int END = 2;
+	public static int currentState = MENU;
 	Timer frameDraw;
 	Timer alienSpawn;
 	public static BufferedImage image;
@@ -105,7 +105,7 @@ currentState=END;
 		g.setColor(Color.YELLOW);
 		g.drawString("GAME OVER", 100, 100);
 		g.setFont(headingfont);
-		g.drawString("You Killed   Enemies!", 150, 320);
+		g.drawString("You Killed " +manager.getScore()+" Enemies!", 150, 320);
 		g.drawString("Press ENTER to Restart!", 135, 480);
 	}
 

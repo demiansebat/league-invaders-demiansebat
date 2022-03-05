@@ -8,7 +8,7 @@ import java.util.Random;
 public class ObjectManager implements ActionListener {
 	Rocketship rocket;
 	Random random = new Random();
-	private int score=0;
+	private int score = 0;
 	ArrayList<Alien> aliens = new ArrayList<Alien>();
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
@@ -17,6 +17,7 @@ public class ObjectManager implements ActionListener {
 	}
 
 	void addAlien() {
+		System.out.println("hi");
 		aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH), 0, 50, 50));
 	}
 
@@ -33,10 +34,10 @@ public class ObjectManager implements ActionListener {
 				projectile.isActive = false;
 			}
 		}
-	rocket.update();
+		rocket.update();
 		checkCollision();
 		purgeObjects();
-		
+
 	}
 
 	void addProjectile(Projectile projectile) {
@@ -73,31 +74,28 @@ public class ObjectManager implements ActionListener {
 
 	}
 
-void checkCollision() {
-for(int i = 0; i < aliens.size(); i++) {
-		 if(aliens.get(i).collisionBox.intersects(rocket.collisionBox)) {
-			 aliens.get(i).isActive=false;
-			 rocket.isActive=false;
-		 }
-		 for (int k = 0; k < projectiles.size(); k++) {
-			if(projectiles.get(k).collisionBox.intersects(aliens.get(i).collisionBox)) {
-				aliens.get(i).isActive=false;
-				rocket.isActive=false;
+	void checkCollision() {
+		for (int i = 0; i < aliens.size(); i++) {
+			if (aliens.get(i).collisionBox.intersects(rocket.collisionBox)) {
+				aliens.get(i).isActive = false;
+				rocket.isActive = false;
+				GamePanel.currentState=GamePanel.END;
+			}
+			for (int k = 0; k < projectiles.size(); k++) {
+				if (projectiles.get(k).collisionBox.intersects(aliens.get(i).collisionBox)) {
+					aliens.get(i).isActive = false;
+					projectiles.get(k).isActive = false;
+					score++;
+				}
 			}
 		}
-}
-for(int i = 0; i < aliens.size(); i++) {
-if(aliens.get(i).isActive=false) {
-	score++;
-}
-}
-}
-public int getScore() {
-	return score;
-}
+	}
+	public int getScore() {
+		return score;
+	}
 
-public void setScore(int score) {
-	this.score = score;
-}
+	public void setScore(int score) {
+		this.score = score;
+	}
 
 }
